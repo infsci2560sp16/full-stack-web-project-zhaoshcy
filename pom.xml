@@ -28,11 +28,6 @@
       <version>4.3.1</version>
     </dependency>
   </dependencies>
-      <groupId>org.jscience</groupId>
-      <artifactId>jscience</artifactId>
-      <version>4.3.1</version>
-    </dependency>
-  </dependencies>
   <build>
     <plugins>
       <plugin>
