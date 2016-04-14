@@ -85,7 +85,7 @@ public class RestfulRoutes {
                 while(rs.next()){
                 Map<String, Object> result = new HashMap<>();
                 result.put("Name", rs.getString("NAME"));
-                result.put("Phone", rs.getString("PHONE"));
+                result.put("Phone", rs.getString("PHONENUMBER"));
                 result.put("Email", rs.getString("EMAIL"));
                 data.add(result);
                 }
