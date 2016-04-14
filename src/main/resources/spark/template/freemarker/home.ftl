@@ -205,7 +205,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</#if>
 				<p>		
 				
-				<button id="get-info-btn">Get My Information</button>
+				<button id="get-info-btn" type="submit" action="getMyInfo()">Get My Information</button>
 				<ul class="social-in" id="my-info">
 				</ul>
 				</div>
@@ -237,10 +237,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   			$.get("/api/my_info", function( data ) {
 			  console.log(data);
 			  var dataJson = JSON.parse(data);
+
 			  var $container = $('#my-info')
 			  for (var key in dataJson) {
 			  	var $li = $('<li>');
-			  	$li.html(dataJson[key]);
+			  	console.log(dataJson[key].Name);
+			  	$li.html(dataJson[key].Name+"<br/>"+dataJson[key].Phone+"<br/>"+dataJson[key].Email);
+			  	
+
 			  	$container.append($li);
 			  }
 			  $btn.hide();

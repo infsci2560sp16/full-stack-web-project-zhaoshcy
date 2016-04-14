@@ -11,8 +11,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-
+import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,13 +74,35 @@ public class RestfulRoutes {
             }, new FreeMarkerEngine());
             
             
-            get("/api/my_info", (req, res) -> {
-                Map<String, Object> data = new HashMap<>();
-                data.put("address", "XX");
-                data.put("phone", "123-456789");
-                data.put("email", "my.info@pitt.edu");
+               get("/api/my_info", (req, res) -> {
+                List<Object> data =new ArrayList<>();
+                Connection connection=null;
+                try{
+                connection = DatabaseUrl.extract().getConnection();
+                Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM INFO;");
+                
+                while(rs.next()){
+                Map<String, Object> result = new HashMap<>();
+                result.put("Name", rs.getString("NAME"));
+                result.put("Phone", rs.getString("PHONE"));
+                result.put("Email", rs.getString("EMAIL"));
+                data.add(result);
+                }
+            }catch (Exception e){
+                data.add("error"+e);
+            }finally{
+                if(connection !=null)
+                    try{
+                        connection.close();
+                    }catch(SQLException e){
+                        
+                    }
+            }
                 return data;
             }, gson::toJson);
+            
+
             
             
             post("/api/add_music_info", (req, res) -> {
